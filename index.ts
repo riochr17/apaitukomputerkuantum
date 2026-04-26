@@ -42,6 +42,7 @@ app.get("/", async (req, res) => {
       <html>
         <head>
           <meta charset="utf-8"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>Apa itu Komputer Kuantum? Penjelasan Lengkap dan Mudah Dipahami</title>
           <meta name="description" content="Komputer kuantum adalah jenis komputer yang menggunakan prinsip mekanika kuantum untuk memproses informasi lebih cepat dari komputer klasik. Pelajari konsep dasar, cara kerja, dan kegunaannya." />
           <link rel="canonical" href="https://apaitukomputerkuantum.web.id" />
