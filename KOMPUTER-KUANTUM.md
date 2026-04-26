@@ -19,7 +19,7 @@
 
 ---
 
-_Jika kamu punya keahlian dibidang komputer kuantum baik secara keilmuan **fisika**, **kimia**, **elektro**, **informatika**, **sains komputer**, **matematika**, atau keilmuan lainnya, bantu kami memperbaiki catatan literasi Komputer Kuantum ini disini [https://github.com/riochr17/apaitukomputerkuantum](https://github.com/riochr17/apaitukomputerkuantum)_
+_Jika kamu punya keahlian dibidang komputer kuantum baik secara keilmuan **fisika**, **kimia**, **elektro**, **informatika**, **sains komputer**, **matematika**, atau keilmuan lainnya, bantu kami memperbaiki catatan literasi Komputer Kuantum ini disini [Source Code](https://github.com/riochr17/apaitukomputerkuantum)_
 
 ## Dari Komputer Klasik menuju Komputer Kuantum
 
