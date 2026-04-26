@@ -310,7 +310,7 @@ Setelah ini saya akan coba membahas tentang bus komunikasi antara Controller Inp
 
 Tools untuk melakukan pemrograman komputer kuantum yang paling populer saat ini adalah Qiskit. Lebih tepatnya Qiskit ini bukan bahasa pemrograman tetapi sebuah tools library di python (Qiskit SDK).
 
-> Mengapa blm ada bahasa pemrograman khusus komputer kuantum? Alasan yang paling masuk akal menurut saya adalah terlalu dini. Effort yang dikeluarkan utk menulis bahasa pemrograman baru untuk komputer kuantum yang blm pasti wujud komersilnya tekesan yang terlalu tergesa-gesa. Dalam mengoperasikan qubit saat ini dengan memanfaatkan bahasa pemrograman yang sudah ada merupakan strategi yang praktis dan meminimalisir penggunaan resource yang sia-sia.
+> Mengapa blm ada bahasa pemrograman khusus komputer kuantum? Alasan yang paling masuk akal menurut saya adalah terlalu dini. Effort yang dikeluarkan utk menulis bahasa pemrograman baru untuk komputer kuantum yang blm pasti wujud komersilnya terkesan tergesa-gesa. Dalam mengoperasikan qubit saat ini cara dengan memanfaatkan bahasa pemrograman yang sudah ada merupakan strategi yang praktis dan meminimalisir penggunaan resource yang sia-sia.
 
 Berikut contoh kode program komputer kuantum yang saya ambil dari github [https://github.com/Qiskit/qiskit](https://github.com/Qiskit/qiskit).
 
@@ -329,9 +329,9 @@ qc.cx(0, 2)         # 0th-qubit-Controlled-NOT gate on 2nd qubit
 Jika variabel `qc` diprint, maka hasilnya seperti berikut:
 
 ```
-     ┌───┐┌────────┐          
+     ┌───┐┌────────┐
 q_0: ┤ H ├┤ P(π/2) ├──■────■──
-     └───┘└────────┘┌─┴─┐  │  
+     └───┘└────────┘┌─┴─┐  │
 q_1: ───────────────┤ X ├──┼──
                     └───┘┌─┴─┐
 q_2: ────────────────────┤ X ├
