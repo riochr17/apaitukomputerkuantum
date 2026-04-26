@@ -5,7 +5,7 @@
 * [Dari Komputer Klasik menuju Komputer Kuantum](#dari-komputer-klasik-menuju-komputer-kuantum)
 * [Qubit](#qubit)
 * [Klarifikasi](#klarifikasi)
-* [Realisasi Perangkat Keras](#realisasi-perangkat-keras)
+* [Realisasi Komputer Kuantum](#realisasi-komputer-kuantum)
 * [Atom Buatan (Super Atom)](#atom-buatan-super-atom)
 * [Resonator sebagai Jembatan Multi-Fungsi](#resonator-sebagai-jembatan-multi-fungsi)
 * [One-Qubit / Two-Qubits Gates](#one-qubit--two-qubits-gates)
@@ -18,6 +18,8 @@
 * [Konsep Quantum Supremacy](#konsep-quantum-supremacy)
 
 ---
+
+_Jika kamu punya keahlian dibidang komputer kuantum baik secara keilmuan **fisika**, **kimia**, **elektro**, **informatika**, **sains komputer**, **matematika**, atau keilmuan lainnya, bantu kami memperbaiki catatan literasi Komputer Kuantum ini disini [https://github.com/riochr17/apaitukomputerkuantum](https://github.com/riochr17/apaitukomputerkuantum)_
 
 ## Dari Komputer Klasik menuju Komputer Kuantum
 
@@ -49,7 +51,7 @@ QPU
 +---------------------------------------------------------------------------------+
 ```
 
-QPU ini adalah istilah yang saya buat sendiri untuk menggambarkan sebuah chip komputer kuantum yang berisi banyak qubits di dalamnya, beserta hardware pendukung lainnya, dan dapat melakukan tujuannya (utk melakukan kalkulasi). Pada QPU yang saya gambarkan, QPU menerima instruksi melalui sebuah alat yang saya sebut sebagai Controller Input, lalu hasil perhitungan di qubit akan dibaca oleh Controller Readout. Terdapat arah panah yang berbeda dari Controller Readout ke qubit, disini saya coba menegaskan bahwa qubit tidak mengirim data ke Controller Readout, melainkan Controller Readout yang membaca hasil ke qubit.
+QPU ini adalah istilah yang saya buat sendiri untuk menggambarkan sebuah chip komputer kuantum yang berisi banyak qubits di dalamnya, beserta hardware pendukung lainnya, dan dapat melakukan tujuannya (utk melakukan kalkulasi). Pada QPU yang saya gambarkan, QPU menerima instruksi melalui sebuah alat yang saya sebut sebagai Controller Input, lalu Controller Input memanipulasi qubit, lalu nilai akhir qubit dibaca oleh Controller Readout. Terdapat arah panah yang berbeda dari Controller Readout ke qubit, disini saya coba menegaskan bahwa qubit tidak mengirim data ke Controller Readout, melainkan Controller Readout yang membaca hasil ke qubit.
 
 Pada CPU ada modul-modul dasar seperti: Adder, Carry, Shifter, Multiplexer, Register, Decoder, dll. Seluruh modul-modul dasar tersebut ketika dikombinasikan bisa menghasilkan fungsi yang sangat kompleks seperti perkalian, pangkat, eksponen, baca tulis memori, dan banyak lagi. Sebaliknya, jika kita lihat lebih detail, misalnya modul Adder itu terdiri dari kombinasi gerbang logika (logic gates): XOR, AND, dan OR. Berikut saya tampilkan skema modul half adder:
 
@@ -233,7 +235,7 @@ Pada QPU gerbang kuantum: `X`, `Y`, `Z`, `H`, `CNOT`, `SWAP`, dll.
 
 Untuk menjalankan gerbang logika `AND`, maka harus tersedia rangkaian logika `AND` yang terdiri dari 2 transistor PMOS dan 2 transistor NMOS disusun sedemikian rupa agar menghasilkan keluaran logika `AND`. Input dari instruksi gerbang logika `AND` akan dikirim ke rangkaian transistor tersebut dan menghasilkan output. Sama halnya dengan `OR` membutuhkan rangkaian transistor `OR` yang berbeda bentuknya dari `AND`, sama halnya dengan `XOR`, `NOT`, dll. Disini kita bisa lihat pola utk menjalankan gerbang logika, maka masing-masing rangkaian transistor yang berbeda-beda untuk setiap gerbang logika tersebut harus tersedia di CPU.
 
-Hal ini sangat kontras dengan komputer kuantum. setiap gerbang kuantum apapun itu tidak memerlukan rangkaian khusus untuk menjalankannya, melainkan dijalankan pada qubit. Misal ketika ada instruksi `H`, maka `H` tersebut langsung dijalankan pada qubit. Apa yang dimaksud dengan menjalankan gerbang kuantum `H` pada qubit? Kita bahas tentang qubit.
+Hal ini sangat kontras dengan komputer kuantum. Setiap jenis gerbang kuantum tidak memerlukan rangkaian khusus untuk menjalankannya, melainkan cukup diterapkan langsung pada qubit. Disini ada sedikit perbedaan istilah "dijalankan" (pada CPU) dan "diterapkan" (pada QPU). Pada QPU, qubit tidak menjalankan instruksi, yang terjadi adalah Controller Input mengirimkan sebuah sinyal/microwave pulse ke qubit dan tindakan ini mengubah keadaan kuantum qubit. Misal ketika ada instruksi `H`, maka `H` tersebut langsung diterapkan pada qubit dan mengubah quantum state-nya, begitu juga instruksi lain seperti `CNOT`, `Z`, dan lainnya. Apa yang dimaksud dengan menerapkan gerbang kuantum `H` pada qubit? Kita bahas tentang qubit.
 
   ## Qubit
 
@@ -246,9 +248,9 @@ E2 (second excitation) -> tingkat eksitasi kedua
 ...dst
 ```
 
-Pada komputer kuantum, tingkatan energi elektron valensi ini dimodelkan menjadi seperti bit: E0 bernilai 0 dan E1 bernilai 1. Tingkatan energi lain E2, E3, dst itu diabaikan, mengapa diabaikan? saya dapat banyak penjelasan yang tidak memuaskan dan saya tidak terlalu paham hingga saat ini, kalian coba cari tahu mengapa hanya E0 dan E1. Beberapa jawaban mengatakan untuk simplifikasi dan alasan kompatibilitas dengan cara kerja bit pada komputer. Ada jawaban lain yang mengatakan karena tingkatan energi selain E0 dan E1 tidak terlalu berpengaruh.
+Pada komputer kuantum, tingkatan energi elektron valensi dimodelkan menjadi seperti bit: E0 bernilai 0 dan E1 bernilai 1. Tingkatan energi lain E2, E3, dst itu diabaikan, mengapa diabaikan? saya dapat banyak penjelasan yang tidak memuaskan dan saya tidak terlalu paham hingga saat ini, kalian coba cari tahu mengapa hanya E0 dan E1. Beberapa jawaban mengatakan untuk simplifikasi dan alasan kompatibilitas dengan cara kerja bit pada komputer. Ada jawaban lain yang mengatakan karena tingkatan energi selain E0 dan E1 tidak terlalu berpengaruh.
 
-Jika kalian pernah mendengar qubit itu bisa bernilai 0, 1, atau keduanya, maka tingkatan energi elektron valensi inilah yang dimaksud oleh hal tersebut. Jadi yang dijadikan ukuran bit pada qubit itu adalah tingkatan energi elektron valensi. Tingkatan energi elektron valensi bisa dalam keadaan dasar (ground state / nilai 0), bisa dalam tingkat eksitasi pertama (nilai 1), atau bisa dikeduanya (yang disebut keadaan superposisi). Saya dulu membayangkan apa yang dimaksud dengan superposisi ini secara fisik, apakah bola elektronnya berada ditengah2 antara E0 dan E1? Ternyata bukan, disini kita tidak bisa membayangkan elektron sebagai bola yang bergeser-geser dari E0 ke E1, tetapi posisi tingkat energi elektron valensi tersebut harus dibayangkan sebagai gelombang, tepatnya gelombang kuantum. Pada kondisi superposisi, gelombang kuantum elektron valensi ini memiliki campuran kedua energi E0 dan E1 sehingga tidak dapat dituliskan 0 atau 1 saja melainkan keduanya. Selain tingkat energi E0 dan E1, pada atom juga terdapat fase, untuk fase saya jujur tidak bisa membayangkan bentuknya seperti apa pada atom, hampir semua penjelasan yang saya baca berakhir di teori dan formula matematika. Kemampuan saya untuk menjelaskan atom, elektron valensi, dan fase hanya sebatas ini, untuk informasi lebih lanjut kalian bisa berdiskusi dengan ahli di bidangnya atau mencari literasi terkait ini.
+Jika kalian pernah mendengar qubit itu bisa bernilai 0, 1, atau keduanya, maka tingkatan energi elektron valensi inilah yang dimaksud oleh hal tersebut. Jadi yang dijadikan ukuran bit pada qubit itu adalah tingkatan energi elektron valensi. Tingkatan energi elektron valensi bisa dalam keadaan dasar (ground state / nilai 0), bisa dalam tingkat eksitasi pertama (nilai 1), atau bisa dikeduanya (yang disebut keadaan **superposisi**). Saya dulu membayangkan apa yang dimaksud dengan superposisi ini secara fisik, apakah bola elektronnya berada ditengah2 antara E0 dan E1? Ternyata bukan, disini kita tidak bisa membayangkan elektron sebagai bola yang bergeser-geser dari E0 ke E1 karena memang aktualnya bukan bola, tetapi posisi tingkat energi elektron valensi tersebut harus dibayangkan sebagai gelombang, tepatnya gelombang kuantum. Pada kondisi superposisi, gelombang kuantum elektron valensi memiliki campuran kedua energi E0 dan E1 sehingga tidak dapat dituliskan 0 atau 1 saja melainkan keduanya. Selain tingkat energi E0 dan E1, pada atom juga terdapat fase, untuk fase saya jujur tidak bisa membayangkan bentuknya seperti apa pada atom, hampir semua penjelasan yang saya baca berakhir di teori dan formula matematika. Kemampuan saya untuk menjelaskan atom, elektron valensi, dan fase hanya sebatas ini, untuk informasi lebih lanjut kalian bisa berdiskusi dengan ahli di bidangnya atau mencari literasi terkait ini.
 
 Di atas saya sudah membahas tentang tingkatan energi elektron valensi dan fase. Pada komputer kuantum dua karakteristik atom ini dimodelkan menjadi qubit. Tingkatan energi disebut amplitudo (dengan min = E0 dan max = E1), dan fase tetap disebut fase. Qubit ini digambarkan menggunakan istilah Bloch Sphere (bola Bloch) seperti sebuah bola dengan 3 sumbu: X, Y, dan Z.
 
@@ -295,7 +297,7 @@ Bahasa program -> quantum gate --(dikirim)--> ke Controller Input
 
 - Bukankah Controller Input itu bagian dari QPU? Saya tegaskan lagi tidak ada fisik QPU yang bisa dibayangkan disini. Saya membayangkan Controller Input itu sebuah micro-controller yang memanipulasi keadaan kuantum qubit dengan suatu metode tertentu. Seluruh bagian komputer kuantum yang saya gambarkan sebelumnya seperti Controller Input, qubit-qubit, Controller Readout merupakan perangkat keras yang terpisah-pisah.
 
-## Realisasi Perangkat Keras
+## Realisasi Komputer Kuantum
 
 Mengapa komputer kuantum tidak seperti komputer klasik yang memiliki bahasa mesin? Menurut pendapat saya, karena komputer kuantum hingga saat ini masih dalam pengembangan sehingga pada _state-of-the-art_ saat ini yang paling praktis adalah dengan langsung mengeksekusi gerbang kuantum tanpa bahasa mesin kuantum khusus. Kedepannya mungkin saja dikembangkan bahasa mesin khusus untuk komputer kuantum.
 
@@ -306,9 +308,9 @@ Saya tidak mengetahui persis bagaimana proses eksekusi gerbang kuantum di komput
 
 Setelah ini saya akan coba membahas tentang bus komunikasi antara Controller Input-qubit-Controller Readout, kita bahas setelah bahasan tentang instruksi gerbang kuantum.
 
-Bahasa pemrograman kuantum saat ini yang paling populer yang saya tau: Qiskit. Lebih tepatnya Qiskit ini bukan bahasa pemrograman tetapi sebuah tools library di python (Qiskit SDK).
+Tools untuk melakukan pemrograman komputer kuantum yang paling populer saat ini adalah Qiskit. Lebih tepatnya Qiskit ini bukan bahasa pemrograman tetapi sebuah tools library di python (Qiskit SDK).
 
-> Mengapa blm ada bahasa pemrograman khusus komputer kuantum? Alasan yang paling masuk akal menurut saya adalah terlalu dini. Effort yang dikeluarkan utk menulis bahasa pemrograman baru untuk komputer kuantum yang blm pasti wujud komersilnya merupakan tindakan yang terlalu tergesa-gesa. Dalam mengoperasikan qubit saat ini dengan memanfaatkan bahasa pemrograman yang sudah ada merupakan tindakan yang praktis dan meminimalisir penggunaan resource yang sia-sia.
+> Mengapa blm ada bahasa pemrograman khusus komputer kuantum? Alasan yang paling masuk akal menurut saya adalah terlalu dini. Effort yang dikeluarkan utk menulis bahasa pemrograman baru untuk komputer kuantum yang blm pasti wujud komersilnya tekesan yang terlalu tergesa-gesa. Dalam mengoperasikan qubit saat ini dengan memanfaatkan bahasa pemrograman yang sudah ada merupakan strategi yang praktis dan meminimalisir penggunaan resource yang sia-sia.
 
 Berikut contoh kode program komputer kuantum yang saya ambil dari github [https://github.com/Qiskit/qiskit](https://github.com/Qiskit/qiskit).
 
