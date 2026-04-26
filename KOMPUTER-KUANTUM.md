@@ -9,8 +9,8 @@
 * [Atom Buatan (Super Atom)](#atom-buatan-super-atom)
 * [Resonator sebagai Jembatan Multi-Fungsi](#resonator-sebagai-jembatan-multi-fungsi)
 * [One-Qubit / Two-Qubits Gates](#one-qubit--two-qubits-gates)
-* [Superposisi](#superposisi)
 * [Keterikatan Qubit (Entanglement)](#keterikatan-qubit-entanglement)
+* [Desain Komputer Kuantum](#desain-komputer-kuantum)
 * [Entanglement vs SWAP](#entanglement-vs-swap)
 * [Interferensi](#interferensi)
 * [Gerbang Kuantum](#gerbang-kuantum)
@@ -270,7 +270,7 @@ dilakukan dengan menguraikan rumus `f(a,b,c)` menjadi instruksi bahasa mesin. La
 1. f(a,b,c) -> diterjemahkan menjadi instruksi bahasa mesin
 2. instruksi bahasa mesin -> dikirim ke CPU satu per satu
 3. CPU menerima instruksi lalu memetakan instruksi menjadi beberapa micro-ops
-4. CPU menjalankan seluruh micro-ops dari sebuah instruksi
+4. CPU menjalankan seluruh micro-ops
 ```
 
 Pada komputer kuantum proses yang sama dilakukan dengan mendekomposisi permasalahan ke bahasa mesin kuantum. Namun bahasa mesin kuantum ini tidak dikirim ke QPU tetapi bahasa mesin kuantum tersebut diterjemahkan lagi ke deretan instruksi gerbang kuantum. Deretan instruksi gerbang kuantum ini lalu dieksekusi oleh Controller Input.
@@ -373,7 +373,7 @@ sekarang ketika dijalankan kita bisa melihat hasil dari proses kalkulasi kuantum
 Banyak pasti yang bertanya-tanya ini hasil apa? Komputer kuantum seperti ini saja? Fungsinya apa kalau hanya seperti ini? Sambil berjalan saya akan coba jawab satu per satu.
 
 Output program kuantum di atas dapat diinterpretasikan dengan
-- nilai 111 (=8 dalam integer) memiliki probabilitas sebesar 50.5%, dan 
+- nilai 111 (=7 dalam integer) memiliki probabilitas sebesar 50.5%, dan 
 - nilai 000 (=0 dalam integer) memiliki probabilitas 49.5%.
 
 Komputer kuantum tidak menyelesaikan masalah seperti yang diselesaikan oleh komputer klasik seperti penjumlahan, pengurangan, perkalian, dll. Ini yang saya sebutkan di awal bahwa domain permasalahan yang diselesaikan oleh komputer kuantum berbeda dengan komputer klasik.
@@ -566,15 +566,67 @@ Seperti apa bentuk fisik resonator ini? Saya sendiri blm bisa membayangkannya hi
 
 Selain sebagai pengirim instruksi gerbang kuantum, resonator juga digunakan untuk membaca status akhir dari qubit. Mekanismenya kurang lebih mirip, Controller Readout akan mengirimkan gelombang mikro lemah (disebut _probe pulse_) ke Readout Line, lalu diteruskan ke resonator (yang menghubungkan Readout Line dan qubit), saat qubit menerima gelombang ini, resonator akan merasakan perubahan energi kecil, perubahan energi ini diamplifikasi untuk menentukan state dari qubit apakah 1 atau 0.
 
-Lalu pada gerbang kuantum terdapat istilah _two-qubits gates_ qubit yang artinya memodifikasi dua buah kuantum. Apakah pada gerbang kuantum ini kedua qubit harus ada mediumnya? Benar, medium tersebut adalah resonator, resonator antar qubit ini biasanya disebout _coupler_, jenis resonator ini sama seperti pada Controller Input dan Controller Readout.
+Lalu pada gerbang kuantum terdapat istilah _two-qubits gates_ qubit yang artinya memodifikasi dua buah kuantum. Apakah pada gerbang kuantum ini kedua qubit harus ada mediumnya? Benar, medium tersebut adalah resonator, resonator antar qubit ini biasanya disebout **_coupler_**, jenis resonator ini sama seperti pada Controller Input dan Controller Readout.
 
 ## One-Qubit / Two-Qubits Gates
 
-## Superposisi
+Gerbang kuantum yang diterapkan ke qubit ada dua macam:
+1. Gerbang kuantum satu-qubit
+2. Gerbang kuantum dua-qubit
+
+Pada gerbang satu qubit, Controller Input mengirimkan pulse microwave ke satu qubit, beberapa macam gerbang satu qubit: `H`, `NOT`, `Z`, `S`, `T`, `P`, dan lainnya. Ketika keadaan kuantum qubit berubah akibat pulse microwave gerbang kuantum, kondisi qubit ini disebut **evolusi kuantum**. Ada beberapa hal yang perlu diperhatikan pada qubit terkait gerbang kuantum, salah satunya waktu koherensi (coherence time). Setiap qubit memiliki dua macam waktu koherensi yaitu:
+
+- T1 (_energy relaxation time_): seberapa lama qubit dari posisi excited (1) kembali ke keadaan dasar (0)
+- T2 (_dephasing time_): seberapa lama posisi superposisi bisa mempertahankan fase relatifnya. Jika waktu ini terlewati maka informasi fase pada qubit hilang akibat noise dari lingkungan.
+
+Pada superconducting, waktu ini biasanya sekitar:
+
+- T1 ~ 10–100 μs (microseconds)
+- T2 ~ 10–100 μs
+
+Jika qubit kembali ke ground state dengan waktu secepat itu, seberapa cepat proses manipulasi quantum state melalui gerbang kuantum? Jawabannya proses pengiriman pulse microwave gerbang kuantum berlangsung sangat cepat (~10–50 ns per quantum gate). Ini sekitar ribuan kali lebih cepat, jadi qubit bisa dimanipulasi dengan keadaan masih ter-superposisi dan belum terdefase.
+
+Gerbang kuantum pada qubit memiliki syarat/constraint harus **reversible**, artinya setiap operasi gerbang kuantum yg dilakukan harus bersifat reversible secara matematis. Mengapa? saya blm cari tahu alasan reversible ini, tapi yang saya baca ada beberapa miskonsepsi yang menyatakan kalau reversible ini adalah sebuah benefit yang bisa membuat komputasi pada komputer kuantum jadi lebih baik dibandingkan komputer klasik. Informasi yang saya baca, tanpa sifat reversible pada gerbang kuantum maka akan ada informasi yang hilang dan error yang tidak terduga (ini ada teori fisikanya cuma belum sempat explore).
+
+Gerbang kuantum dua-qubit menghubungkan dua qubit melalui coupler (coupler ini adalah resonator) dan melakukan manipulasi qubit pada satu atau kedua qubit. Pada gerbang kuantum dua-qubit terdapat hal baru yang perlu diperhatikan yaitu **energi gap** antara qubit dan resonator. Energi gap pada resonator akan mempengaruhi bagaimana kedua qubit berinteraksi apakah akan terosilasi atau tidak.
+
+Terkait gap energi antara pada gerbang kuantum dua-qubit antara kedua qubit dan resonator, saya masih belum menemukan bagaimana mekanisme penentuan gap energi ini, ada yang mengatakan bahwa Controller Input akan memanfaatkan nilai koefisien α dan β dari persamaan `∣ψ⟩=α∣0⟩+β∣1⟩` untuk menentukan seberapa besar energi gap yang direkayasakan ke kedua qubit yang tercouple. Ada juga yang mengatakan nilai energi gap ini sudah diatur pada software yang mengendalikan Controller Input berdasarkan heuristik pembuatan komputer kuantum. _Disini saya membutuhkan kontribusi dari pembaca jika menemukan metode yang seharusnya, saya perlu bantuan di bagian ini._
+
+Setiap qubit dan resonator memiliki frekuensi alami. 
 
 ## Keterikatan Qubit (Entanglement)
 
+Kalian mungkin sering mendengar istilah entanglement dimana-mana tapi sangat banyak informasi di internet yang saya baca membingungkan dan tidak menjelaskan seperti apa entanglement itu. Jika instruksi gerbang kuantum H + CNOT dilakukan, maka besar kemungkinan entanglement akan terjadi. Mengapa besar kemungkinan? apakah tidak pasti? secara praktikal instruksi gerbang kuantum apapun dapat berakibat entangled atau tidak.
+
+Kita lihat contoh berikut pada instruksi H(A) + CNOT(A -> B) pada dua qubit A dan B:
+
+- gerbang kuantum H dijalankan, qubit A diberikan pulse microwave agar dalam posisi superposisi.
+- Kemudian, A dibuat 'tidak tepat sama' dengan frekuensi resonator dan B diberi bias tegangan kecil (pulse microware) juga agar 'tidak tepat sama' dengan frekuensi resonator.
+- Resonator dibiarkan seperti awal
+- Hasil dari step ini:
+  - A berosilasi dengan ritme yg sudah diatur ulang
+  - B masih blm bergerak (pulse microwave yg dikirim tadi bertujuan mengubah frekuensi alami agar tidak sinkron dengan resonator).
+- Lalu berikutnya controller qubit A mengirimkan pulse microwave lain ke A yang mengubah state kuantum dari qubit A (terjadi evolusi kuantum di qubit A), hal ini akan mengganggu medan listrik resonator (dispersive shift pada resonator) → perubahan resonator ini mulai dirasakan di B.
+- Di titik ini belum terjadi entanglement, tapi resonator mulai menjadi jalur interaksi antara A ke B secara tidak langsung.
+- Proses pengiriman pulse dari ke qubit A terus berjalan di tahap ini, evolusi kuantum yang terjadi pada A yang mengganggu resonator yang secara langsung mengubah evolusi kuantum pada B.
+- Pada saat tertentu sblm pulse microwave dihentikan kedua state quantum qubit ini akhirnya berkorelasi dan saling mempengaruhi satu sama lain menjadi satu state, inilah disebut **entangled**.
+- setelah itu pulse microwave dihentikan dan kondisi **entanglement** ini tetap berlangsung namun rentan terhadap noise dari luar yang bisa membuatnya decoherence.
+
+Pada kondisi apa entanglement itu tidak terjadi? Salah satu syarat entanglement adalah gap energi antara qubit A dan resonator juga resonator dan qubit B harus cukup besar, agar energi kedua qubit tidak berosilasi.
+
+## Desain Komputer Kuantum
+
+Dari beberapa informasi yang telah dijelaskan di atas, saya akhirnya bisa membayangkan seperti apa bentuk abstraksi dari QPU (komputer kuantum). Berikut adalah gambaran komputer kuantum 6-qubit yang bisa saya bayangkan.
+
+![QPU](/p/qpu.png)
+
+Pada desain ini terdapat 6 qubit, desain setiap qubit yang berdekatan terdapat couple resonator (warna biru). Controller Input memiliki jalur resonator ke setiap qubit untuk menerapkan operasi gerbang kuantum. Controller Readout memiliki jalur resonator untuk membaca hasil akhir (final state / qubit state) dari setiap qubit.
+
+Jika diperhatikan desain komputer kuantum di atas, maka ada satu hal yang masih kurang, yaitu kemampuan entanglement antar qubit yang terbatas. Qubit yang bertetangga dapat melakukan entanglement namun hanya sebatas itu, lalu untuk qubit lain apakah bisa dilakukan? Jika dilihat secara fisik maka tidak bisa dilakukan, namun secara operasi gerbang kuantum terdapat satu mekanisme untuk mewujudkan entanglement antar qubit yang tidak berdekatan yaitu dengan operasi gerbang kuantum SWAP.
+
 ## Entanglement vs SWAP
+
+Salah satu operasi gerbang kuantum lain yang melibatkan dua buah qubit adalah SWAP. TBD.
 
 ## Interferensi
 

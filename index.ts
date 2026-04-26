@@ -32,6 +32,7 @@ const processor = unified()
   .use(rehypeHighlight)
   .use(rehypeStringify);
 
+app.use('/p', express.static('public'));
 app.get("/", async (req, res) => {
   try {
     const filePath = path.join(process.cwd(), './KOMPUTER-KUANTUM.md');
@@ -89,7 +90,7 @@ app.get("/", async (req, res) => {
             }
             img {
               width: 100%;
-              max-width: 450px;
+              max-width: 550px;
             }
             table {
               width: 100%;
