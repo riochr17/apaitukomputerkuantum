@@ -589,9 +589,9 @@ Jika qubit kembali ke ground state dengan waktu secepat itu, seberapa cepat pros
 
 Gerbang kuantum pada qubit memiliki syarat/constraint harus **reversible**, artinya setiap operasi gerbang kuantum yg dilakukan harus bersifat reversible secara matematis. Mengapa? saya blm cari tahu alasan reversible ini, tapi yang saya baca ada beberapa miskonsepsi yang menyatakan kalau reversible ini adalah sebuah benefit yang bisa membuat komputasi pada komputer kuantum jadi lebih baik dibandingkan komputer klasik. Informasi yang saya baca, tanpa sifat reversible pada gerbang kuantum maka akan ada informasi yang hilang dan error yang tidak terduga (ini ada teori fisikanya cuma belum sempat explore).
 
-Gerbang kuantum dua-qubit menghubungkan dua qubit melalui coupler (coupler ini adalah resonator) dan melakukan manipulasi qubit pada satu atau kedua qubit. Pada gerbang kuantum dua-qubit terdapat hal baru yang perlu diperhatikan yaitu **energi gap** antara qubit dan resonator. Energi gap pada resonator akan mempengaruhi bagaimana kedua qubit berinteraksi apakah akan terosilasi atau tidak.
+Gerbang kuantum dua-qubit menghubungkan dua qubit melalui coupler (coupler ini adalah resonator) dan melakukan manipulasi qubit pada satu atau kedua qubit. Pada gerbang kuantum dua-qubit terdapat hal baru yang perlu diperhatikan yaitu **gap frekuensi** antara qubit dan resonator. gap frekuensi pada resonator akan mempengaruhi bagaimana kedua qubit berinteraksi apakah akan terosilasi atau tidak.
 
-Terkait gap energi antara pada gerbang kuantum dua-qubit antara kedua qubit dan resonator, saya masih belum menemukan bagaimana mekanisme penentuan gap energi ini, ada yang mengatakan bahwa Controller Input akan memanfaatkan nilai koefisien α dan β dari persamaan `∣ψ⟩=α∣0⟩+β∣1⟩` untuk menentukan seberapa besar energi gap yang direkayasakan ke kedua qubit yang tercouple. Ada juga yang mengatakan nilai energi gap ini sudah diatur pada software yang mengendalikan Controller Input berdasarkan heuristik pembuatan komputer kuantum. _Disini saya membutuhkan kontribusi dari pembaca jika menemukan metode yang seharusnya, saya perlu bantuan di bagian ini._
+Terkait gap frekuensi antara pada gerbang kuantum dua-qubit antara kedua qubit dan resonator, saya masih belum menemukan bagaimana mekanisme penentuan gap frekuensi ini, ada yang mengatakan bahwa Controller Input akan memanfaatkan nilai koefisien α dan β dari persamaan `∣ψ⟩=α∣0⟩+β∣1⟩` untuk menentukan seberapa besar gap frekuensi yang direkayasakan ke kedua qubit yang tercouple. Ada juga yang mengatakan nilai gap frekuensi ini sudah diatur pada software yang mengendalikan Controller Input berdasarkan heuristik pembuatan komputer kuantum. _Disini saya membutuhkan kontribusi dari pembaca jika menemukan metode yang seharusnya, saya perlu bantuan di bagian ini._
 
 Setiap qubit dan resonator memiliki frekuensi alami. 
 
@@ -613,9 +613,9 @@ Kita lihat contoh berikut pada instruksi H(A) + CNOT(A -> B) pada dua qubit A da
 - Pada saat tertentu sblm pulse microwave dihentikan kedua state quantum qubit ini akhirnya berkorelasi dan saling mempengaruhi satu sama lain menjadi satu state, inilah disebut **entangled**.
 - setelah itu pulse microwave dihentikan dan kondisi **entanglement** ini tetap berlangsung namun rentan terhadap noise dari luar yang bisa membuatnya decoherence.
 
-Pada kondisi apa entanglement itu tidak terjadi? Salah satu syarat entanglement adalah gap energi antara qubit A dan resonator juga resonator dan qubit B harus cukup besar, agar energi kedua qubit tidak berosilasi.
+Pada kondisi apa entanglement itu tidak terjadi? Salah satu syarat entanglement adalah gap frekuensi antara qubit A dan resonator juga resonator dan qubit B harus cukup besar, agar energi kedua qubit tidak berosilasi.
 
-Entanglement pada qubit bersifat sementara, artinya tidak selamanya kedua qubit entangled dan tidak terpisahkan lagi. Aktualnya pada perancangan gerbang kuantum, entanglement ini pada keadaan tertentu mungkin tidak sengaja terjadi dan setelah itu kondisi entanglement tersebut dilepas (dipisahkan). Untuk lebih memahami kondisi entangled kita coba kalian analisis operasi gerbang kuantum berikut:
+Entanglement pada qubit bersifat sementara, artinya tidak selamanya kedua qubit entangled dan tidak terpisahkan lagi. Aktualnya pada perancangan gerbang kuantum, entanglement ini pada keadaan tertentu bisa terjadi tanpa disengaja dan setelah itu kondisi entanglement tersebut dilepas (dipisahkan). Untuk lebih memahami kondisi entangled, coba kalian analisis operasi gerbang kuantum berikut:
 
 1. `H`+`CNOT`
 2. `CNOT`+`CNOT`+`CNOT`
@@ -634,7 +634,34 @@ Jika diperhatikan desain komputer kuantum di atas, maka ada satu hal yang masih 
 
 ## Entanglement vs SWAP
 
-Salah satu operasi gerbang kuantum lain yang melibatkan dua buah qubit adalah SWAP. TBD.
+Salah satu operasi gerbang kuantum lain yang melibatkan dua buah qubit adalah SWAP. Gerbang kuantum SWAP bukanlah gerbang kuantum individual melainkan terkomposisi dari gerbang kuantum lainnya, salah satu implementasi SWAP dengan menerapkan CNOT sebanyak tiga kali.
+
+```
+SWAP = CNOT + CNOT + CNOT = CNOT x 3
+```
+
+Apa itu gerbang kuantum SWAP? SWAP adalah operasi gerbang kuantum untuk menukar keadaan kuantum dari dua qubit. Tentunya pertukaran ini bisa terjadi jika kedua qubit berdekatan atau memiliki jalur untuk terhubung seperti coupler (resonator). Ini menjadi solusi ketika terdapat dua qubit yang berjauhan tetapi ingin melakukan operasi gerbang kuantum dua-qubit seperti untuk mendapatkan kondisi entanglement. Proses yang terjadi secara fisik hampir sama dengan proses mendapatkan kondisi entangled `H + CNOT` pada bahasan sebelumnya.
+
+Untuk melakukan pertukaran dua keadaan kuantum dari dua qubit, terdapat satu syarat penting pada superconducting qubit, yaitu gap frekuensi antara qubit 1 dan resonator juga resonator dan qubit 2 harus seminimal mungkin mendekati 0. Saya juga menemukan sebuah informasi bahwa pada coupling (resonator) terdapat satu variabel `g` yang disebut kekuatan coupling. Kekuatan coupling `g` ini katanya memiliki hubungan dengan proses swap tapi saya belum menemukan informasi yang tepat untuk menggambarkan hubungannya.
+
+Pada SWAP, saat kedua qubit terhubung melalui coupler, amplitudo dan fase dari dua qubit tersebut berosilasi secara kontinu hingga pada kondisi tertentu keadaan kuantum bertukar, lalu setelah beberapa waktu evolusi kuantum tertentu coupler dinonaktifkan disinilah kondisi swap selesai dilakukan.
+
+Jika kita perhatikan antara proses penerapan gerbang kuantum pada saat entanglement dan swap:
+
+- Target entanglement: `H`+`CNOT`
+- Target swap: `CNOT`+`CNOT`+`CNOT`
+
+kedua proses tersebut melibatkan dua qubit dengan perbedaan gap frekuensi: entanglement butuh gap tinggi, swap butuh gap rendah. Terdapat sebuah kondisi unik yang membuat entanglement dan swap ini terhubung spt berikut:
+
+Misalkan terdapat gerbang kuantum dengan operasi berikut:
+
+```
+  Dua qubit a dan b dalam kondisi keadaan dasar (ground state)
+  H(a) -> SWAP(a,b)
+= H(a) -> CNOT(a,b) -> CNOT(b,a) -> CNOT(a,b)
+```
+
+Dua gerbang kuantum awal `H + CNOT` merupakan sebuah mekanisme untuk mendapatkan entanglement. Apakah setelah dua gerbang kuantum diterapkan kedua qubit menjadi entangled? Benar, kedua qubit mengalami entanglement sementara (ini adalah efek samping dari swap jika qubit kontrol dalam kondisi superposisi), namun kondisi ini langsung diubah oleh dua gerbang kuantum `CNOT` berikutnya. Pada hasil akhir keadaan kuantum kedua qubit bertukar dan tidak terjadi entanglement.
 
 ## Interferensi
 
