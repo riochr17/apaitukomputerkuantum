@@ -33,6 +33,20 @@ const processor = unified()
   .use(rehypeStringify);
 
 app.use('/p', express.static('public'));
+app.get('/sitemap.xml', (req, res) => {
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+      <loc>https://apaitukomputerkuantum.web.id/</loc>
+      <lastmod>${new Date().toISOString()}</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>1.0</priority>
+    </url>
+  </urlset>`;
+
+  res.header('Content-Type', 'application/xml');
+  res.send(sitemap);
+});
 app.get("/", async (req, res) => {
   try {
     const filePath = path.join(process.cwd(), './KOMPUTER-KUANTUM.md');
