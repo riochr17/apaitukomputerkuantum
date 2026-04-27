@@ -47,6 +47,15 @@ app.get('/sitemap.xml', (req, res) => {
   res.header('Content-Type', 'application/xml');
   res.send(sitemap);
 });
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send(`
+User-agent: *
+Allow: /
+
+Sitemap: https://apaitukomputerkuantum.web.id/sitemap.xml
+  `.trim());
+});
 app.get("/", async (req, res) => {
   try {
     const filePath = path.join(process.cwd(), './KOMPUTER-KUANTUM.md');
