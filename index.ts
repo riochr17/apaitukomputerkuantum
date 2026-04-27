@@ -130,6 +130,15 @@ app.get("/", async (req, res) => {
           </style>
         </head>
         <body>
+          <!-- Google tag (gtag.js) -->
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFVTJYZMHE"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-HFVTJYZMHE');
+          </script>
           ${html}
         </body>
       </html>
