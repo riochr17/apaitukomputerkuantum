@@ -16,6 +16,7 @@
 * [Gerbang Kuantum](#gerbang-kuantum)
 * [The Measurement Problem, Schrödinger Cat, Bohr vs. Einstein](#the-measurement-problem-schrödinger-cat-bohr-vs-einstein)
 * [Konsep Quantum Supremacy](#konsep-quantum-supremacy)
+* [Quantum Annealing](#quantum-annealing)
 
 ---
 
@@ -29,7 +30,7 @@ Pemahaman saya tentang qubit saat itu kira-kira seperti ini: jika dengan bit 1/0
 
 Lalu seperti apa gambaran komputer kuantum itu jika dibandingkan dengan komputer komersil yang digunakan banyak orang saat ini?
 
-Pada komputer biasa terdapat sebuah CPU yang sederhananya bertugas untuk melakukan kalkulasi menerima input lalu mengeluarkan output. Selain itu CPU juga memiliki registers untuk menyimpan sementara variabel perhitungan, namun kita abaikan dulu soal registers. Intinya kita yang perlu dipahami bahwa CPU disini memilki input di memori dalam bentuk deretan instruksi bahasa mesin (yang sebelumnya ditulis dalam bahasa assembly) lalu mengeksekusi setiap instruksi tersebut ke CPU. Setiap instruksi yang dieksekusi menghasilkan output yang ditulis ke memori.
+Pada komputer biasa terdapat sebuah CPU yang sederhananya bertugas untuk melakukan kalkulasi menerima input lalu mengeluarkan output. Selain itu CPU juga memiliki registers untuk menyimpan sementara variabel perhitungan, namun kita abaikan dulu soal registers. Perlu dipahami bahwa CPU disini memilki daftar instruksi sebagai input di memori dalam bentuk deretan instruksi bahasa mesin (yang sebelumnya ditulis dalam bahasa assembly) lalu mengeksekusi setiap instruksi tersebut ke CPU. Setiap instruksi yang dieksekusi menghasilkan output yang ditulis ke memori.
 
 ```
 [Memory] --instruksi--> [CPU] --output--> [Memory]
@@ -596,7 +597,7 @@ Setiap qubit dan resonator memiliki frekuensi alami.
 
 ## Keterikatan Qubit (Entanglement)
 
-Kalian mungkin sering mendengar istilah entanglement dimana-mana tapi sangat banyak informasi di internet yang saya baca membingungkan dan tidak menjelaskan seperti apa entanglement itu. Jika instruksi gerbang kuantum H + CNOT dilakukan, maka besar kemungkinan entanglement akan terjadi. Mengapa besar kemungkinan? apakah tidak pasti? secara praktikal instruksi gerbang kuantum apapun dapat berakibat entangled atau tidak.
+Kalian mungkin sering mendengar istilah entanglement dimana-mana tapi sangat banyak informasi di internet yang saya baca membingungkan dan tidak menjelaskan seperti apa entanglement itu. Jika instruksi gerbang kuantum H + CNOT dilakukan, secara teori pasti entangled. Berbeda pada praktikalnya memang entanglement kemungkinan besar terjadi. Mengapa besar kemungkinan? apakah tidak pasti? secara praktikal instruksi gerbang kuantum apapun dapat berakibat entangled atau tidak.
 
 Kita lihat contoh berikut pada instruksi H(A) + CNOT(A -> B) pada dua qubit A dan B:
 
@@ -614,13 +615,20 @@ Kita lihat contoh berikut pada instruksi H(A) + CNOT(A -> B) pada dua qubit A da
 
 Pada kondisi apa entanglement itu tidak terjadi? Salah satu syarat entanglement adalah gap energi antara qubit A dan resonator juga resonator dan qubit B harus cukup besar, agar energi kedua qubit tidak berosilasi.
 
+Entanglement pada qubit bersifat sementara, artinya tidak selamanya kedua qubit entangled dan tidak terpisahkan lagi. Aktualnya pada perancangan gerbang kuantum, entanglement ini pada keadaan tertentu mungkin tidak sengaja terjadi dan setelah itu kondisi entanglement tersebut dilepas (dipisahkan). Untuk lebih memahami kondisi entangled kita coba kalian analisis operasi gerbang kuantum berikut:
+
+1. `H`+`CNOT`
+2. `CNOT`+`CNOT`+`CNOT`
+
+Saya akan bahas analisis terkait dua operasi gerbang kuantum di atas nanti.
+
 ## Desain Komputer Kuantum
 
-Dari beberapa informasi yang telah dijelaskan di atas, saya akhirnya bisa membayangkan seperti apa bentuk abstraksi dari QPU (komputer kuantum). Berikut adalah gambaran komputer kuantum 6-qubit yang bisa saya bayangkan.
+Dari beberapa informasi yang telah dijelaskan di atas, saya akhirnya bisa membayangkan seperti apa bentuk abstraksi dari QPU (komputer kuantum). Berikut adalah gambaran komputer kuantum 6-qubit menurut saya.
 
 ![QPU](/p/qpu.png)
 
-Pada desain ini terdapat 6 qubit, desain setiap qubit yang berdekatan terdapat couple resonator (warna biru). Controller Input memiliki jalur resonator ke setiap qubit untuk menerapkan operasi gerbang kuantum. Controller Readout memiliki jalur resonator untuk membaca hasil akhir (final state / qubit state) dari setiap qubit.
+Pada desain ini terdapat 6 qubit, setiap qubit yang berdekatan terdapat couple resonator (warna biru). Controller Input memiliki jalur resonator ke setiap qubit untuk menerapkan operasi gerbang kuantum (warna merah). Controller Readout memiliki jalur resonator untuk membaca hasil akhir (final state / qubit state) dari setiap qubit (warna hijau).
 
 Jika diperhatikan desain komputer kuantum di atas, maka ada satu hal yang masih kurang, yaitu kemampuan entanglement antar qubit yang terbatas. Qubit yang bertetangga dapat melakukan entanglement namun hanya sebatas itu, lalu untuk qubit lain apakah bisa dilakukan? Jika dilihat secara fisik maka tidak bisa dilakukan, namun secara operasi gerbang kuantum terdapat satu mekanisme untuk mewujudkan entanglement antar qubit yang tidak berdekatan yaitu dengan operasi gerbang kuantum SWAP.
 
@@ -635,3 +643,7 @@ Salah satu operasi gerbang kuantum lain yang melibatkan dua buah qubit adalah SW
 ## The Measurement Problem, Schrödinger Cat, Bohr vs. Einstein
 
 ## Konsep Quantum Supremacy
+
+## Quantum Annealing
+
+Seluruh konsep komputer kuantum yang dibahas sblmnya disebut komputer kuantum berbasis gerbang (_gate-based computer quantum_). Terdapat pendekatan lain yang tidak menggunakan gerbang kuantum, yaitu Quantum Annealing.
