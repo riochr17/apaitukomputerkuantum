@@ -535,6 +535,10 @@ Pada catatan ini saya tidak akan membahas tentang algoritma pada komputer kuantu
 
 Pada komputer klasik cukup mudah membayangkan seperti apa situasi di dalam CPU, misal ada banyak transistor super kecil, hampir seluruh transistor saling terhubung melalui jalur-jalur elektron (tembaga atau material lainnya) yang super kecil juga. Selain itu terdapat jalur akhir dari seluruh transistor tersebut berupa pin penghubung ke motherboard komputer, hp, atau device lain. Kumpulan transistor ini membentuk satu unit kerja terkecil yaitu gerbang logika. Lalu kumpulan gerbang logika membentuk micro-ops yg di bahas sebelumnya. Lalu kumpulan micro-ops ini didefinisikan sebagai instruksi kode mesin terdefinisi pada manual book setiap arsitektur CPU. Bahasa pemrograman level paling rendah seperti assembly berisi daftar instruksi-instruksi kode mesin. Pada level atasnya seperti bahasa pemrograman C ketika dicompile menjadi bahasa mesin.
 
+Ketika dilakukan zoom in mulai dari CPU hingga transistor, maka hasilnya kurang lebih seperti gambar di bawah:
+
+![CPU](/p/cpu.png)
+
 Pada komputer kuantum apakah jalur-jalur elektron ini ada? belum tentu. Terdapat beberapa macam implementasi komputer kuantum berdasarkan mekanisme dan material yang digunakan. Hingga saat ini saya mencatat ada beberapa macam berikut:
 
 1. Superconducting
